@@ -55,8 +55,20 @@ Summary carried over from the old machine's Claude Code chat (Nov 2026).
 - Live Supabase project checked 19 Nov 2026: had 001–039; owner applied 040–060 by hand in
   the SQL Editor. Re-check shows all 58 migrations `ok`. Database matches `main`.
 
+## Hosting (Google Cloud)
+- Cloud Run service `wacrm`, project `wa-crm-eternalflame`, region `africa-south1`.
+  Image repo: `africa-south1-docker.pkg.dev/wa-crm-eternalflame/wacrm/wacrm:<tag>`.
+- No automatic deploys: deploy by hand with `scripts/deploy-cloud-run.sh <new-tag>`
+  (uses `cloudbuild.yaml`; copies the NEXT_PUBLIC_* build values from the live service).
+  Tags so far: v1 (built 29 Aug 2026), v2 (19 Nov 2026, upstream main as of 17 Nov).
+- Server secrets live in Secret Manager and are attached to the Cloud Run service.
+- Roll back: `gcloud run services update-traffic wacrm --region africa-south1
+  --project wa-crm-eternalflame --to-revisions <old-revision>=100`
+  (last v1 revision: `wacrm-00013-d86`; v2 went live as `wacrm-00014-lsv` on 19 Nov 2026).
+- Sign-ins on this Mac: `gh` as renstan-efm; `gcloud` installed via Homebrew.
+
 ### Still to do
-- Deploy the updated app (where it is hosted is not recorded yet; add it here).
+- Apply database migrations BEFORE deploying any version that adds new ones.
 - Marketing site and self-host docs live in a separate repo (wacrm-site), not tracked here.
 - Upstream calls this a template, so new features are meant to be built in forks like this one.
 - Goal for this fork (branding, a specific feature, deployment) is not recorded yet. Add it here.

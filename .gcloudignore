@@ -1,0 +1,7 @@
+# Files NOT uploaded by `gcloud builds submit`.
+# Keeps private settings (.env*), node_modules and build output out of
+# the upload; everything in .gitignore is skipped too.
+.gcloudignore
+.git
+.gitignore
+#!include:.gitignore
